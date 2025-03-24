@@ -10,7 +10,7 @@
     
     <!-- Поля формы -->
     <div class="form-generator__fields">
-      <template v-for="(field, index) in fields" :key="field.name">
+      <template v-for="(field) in fields" :key="field.name">
         <!-- Слот для полностью кастомного поля -->
         <slot 
           v-if="hasSlot(field.name)" 
@@ -18,7 +18,7 @@
           :field="field" 
           :modelValue="formData[field.name]" 
           :errors="errors"
-          :updateField="(value) => updateField(field.name, value)"
+          :updateField="(value: any) => updateField(field.name, value)"
         ></slot>
         
         <!-- Стандартное поле -->
@@ -56,9 +56,11 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType, computed, ref, useSlots } from 'vue';
-import FormField, { FormFieldConfig } from './FormField.vue';
-import { useStore } from 'vuex';
+import { defineComponent, computed, useSlots } from 'vue';
+import type { PropType } from 'vue';
+import FormField from './FormField.vue';
+import type { FormFieldConfig } from './FormField.vue';
+import { useStore } from '../store';
 
 export type FormGeneratorErrors = Record<string, string>;
 

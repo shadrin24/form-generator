@@ -10,7 +10,7 @@
       <input
         v-if="field.type === 'text' || field.type === 'email' || field.type === 'password'"
         :type="field.type"
-        :value="modelValue"
+        :value="modelValue as string"
         :id="field.name"
         :name="field.name"
         :required="field.required"
@@ -23,7 +23,7 @@
       <!-- Текстовая область -->
       <textarea
         v-else-if="field.type === 'textarea'"
-        :value="modelValue"
+        :value="modelValue as string"
         :id="field.name"
         :name="field.name"
         :required="field.required"
@@ -51,7 +51,7 @@
       <!-- Селект -->
       <select
         v-else-if="field.type === 'select'"
-        :value="modelValue"
+        :value="modelValue as string"
         :id="field.name"
         :name="field.name"
         :required="field.required"
@@ -92,7 +92,8 @@
 </template>
 
 <script lang="ts">
-import { defineComponent, PropType } from 'vue';
+import { defineComponent } from 'vue';
+import type { PropType } from 'vue';
 
 // Определение типа поля формы
 export interface FormFieldConfig {
@@ -124,7 +125,7 @@ export default defineComponent({
     },
   },
   emits: ['update:modelValue'],
-  setup(props, { emit }) {
+  setup(_, { emit }) {
     // Обновляет значение для большинства типов полей
     const updateValue = (event: Event) => {
       const target = event.target as HTMLInputElement | HTMLSelectElement | HTMLTextAreaElement;

@@ -25,7 +25,12 @@
                   type="checkbox"
                   :id="field.name"
                   :checked="modelValue"
-                  @change="e => updateField(e.target.checked)"
+                  @change="e => { 
+                    const target = e.target as HTMLInputElement;
+                    if (target) { 
+                      updateField(target.checked);
+                    }
+                  }"
                 />
                 <label :for="field.name">Я согласен с условиями</label>
               </div>
@@ -44,8 +49,18 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from 'vue';
 import FormGenerator from '../components/FormGenerator.vue';
-import { FormFieldConfig } from '../components/FormField.vue';
-import { useStore } from 'vuex';
+import type { FormFieldConfig } from '../components/FormField.vue';
+import { useStore } from '../store';
+
+interface FormData {
+  name: string;
+  email: string;
+  password: string;
+  city: string;
+  message: string;
+  terms: boolean;
+  [key: string]: string | boolean;
+}
 
 export default defineComponent({
   name: 'ExampleForm',
@@ -56,7 +71,7 @@ export default defineComponent({
     const store = useStore();
     
     // Данные формы
-    const formData = ref({
+    const formData = ref<FormData>({
       name: '',
       email: '',
       password: '',
