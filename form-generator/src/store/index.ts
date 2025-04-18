@@ -1,7 +1,7 @@
 // Поскольку Vuex не имеет прямых декларативных файлов в экспорте package.json,
 // используем следующий обходной путь с принудительным импортом
-// @ts-ignore
-import { createStore, Store, useStore as baseUseStore, CommitOptions, DispatchOptions } from "vuex";
+import { createStore, Store, useStore as baseUseStore } from "vuex/dist/vuex.mjs";
+import type { CommitOptions, DispatchOptions } from "vuex/dist/vuex.mjs";
 import type { InjectionKey } from "vue";
 
 // Определение типа состояния хранилища
