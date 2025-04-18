@@ -49,7 +49,7 @@
 <script lang="ts">
 import { defineComponent, ref, reactive } from 'vue';
 import FormGenerator from '../components/FormGenerator.vue';
-import type { FormFieldConfig } from '../components/FormField.vue';
+import type { FormFieldConfig } from '../types/form';
 import { useStore } from '../store';
 
 interface FormData {

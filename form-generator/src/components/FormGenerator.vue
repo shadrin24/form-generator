@@ -90,7 +90,7 @@ import TextField from './fields/TextField.vue';
 import TextareaField from './fields/TextareaField.vue';
 import CheckboxField from './fields/CheckboxField.vue';
 import SelectField from './fields/SelectField.vue';
-import type { FormFieldConfig, FormGeneratorErrors, FormGeneratorProps } from '../types/form';
+import type { FormFieldConfig, FormGeneratorErrors } from '../types/form';
 
 export default defineComponent({
   name: 'FormGenerator',
