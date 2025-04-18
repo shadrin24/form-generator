@@ -1,0 +1,72 @@
+<template>
+  <BaseField :field="field" :error="error">
+    <textarea
+      :value="modelValue"
+      :id="field.name"
+      :name="field.name"
+      :required="field.required"
+      :placeholder="field.placeholder"
+      :disabled="field.disabled"
+      class="form-field__textarea"
+      @input="updateValue($event)"
+    ></textarea>
+  </BaseField>
+</template>
+
+<script lang="ts">
+import { defineComponent } from 'vue';
+import type { PropType } from 'vue';
+import BaseField from './BaseField.vue';
+import type { FormFieldConfig } from '../../types/form';
+
+export default defineComponent({
+  name: 'TextareaField',
+  components: {
+    BaseField,
+  },
+  props: {
+    field: {
+      type: Object as PropType<FormFieldConfig>,
+      required: true,
+    },
+    modelValue: {
+      type: String,
+      default: '',
+    },
+    error: {
+      type: String,
+      default: '',
+    },
+  },
+  emits: ['update:modelValue'],
+  setup(_, { emit }) {
+    const updateValue = (event: Event) => {
+      const target = event.target as HTMLTextAreaElement;
+      emit('update:modelValue', target.value);
+    };
+
+    return {
+      updateValue,
+    };
+  },
+});
+</script>
+
+<style lang="scss" scoped>
+.form-field__textarea {
+  width: 100%;
+  min-height: 100px;
+  padding: 0.75rem;
+  border: 1px solid #ccc;
+  border-radius: 4px;
+  font-size: 1rem;
+  resize: vertical;
+  transition: border-color 0.3s, box-shadow 0.3s;
+  
+  &:focus {
+    outline: none;
+    border-color: #4caf50;
+    box-shadow: 0 0 0 3px rgba(76, 175, 80, 0.2);
+  }
+}
+</style> 

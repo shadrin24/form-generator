@@ -21,12 +21,39 @@
           :updateField="(value: any) => updateField(field.name, value)"
         ></slot>
         
-        <!-- Стандартное поле -->
-        <FormField 
-          v-else
+        <!-- Текстовое поле -->
+        <TextField
+          v-else-if="['text', 'email', 'password'].includes(field.type)"
           :field="field"
+          :modelValue="formData[field.name]"
           :error="errors[field.name]"
-          v-model="formData[field.name]"
+          @update:modelValue="(value) => updateField(field.name, value)"
+        />
+        
+        <!-- Текстовая область -->
+        <TextareaField
+          v-else-if="field.type === 'textarea'"
+          :field="field"
+          :modelValue="formData[field.name]"
+          :error="errors[field.name]"
+          @update:modelValue="(value) => updateField(field.name, value)"
+        />
+        
+        <!-- Чекбокс -->
+        <CheckboxField
+          v-else-if="field.type === 'checkbox'"
+          :field="field"
+          :modelValue="formData[field.name]"
+          :error="errors[field.name]"
+          @update:modelValue="(value) => updateField(field.name, value)"
+        />
+        
+        <!-- Селект -->
+        <SelectField
+          v-else-if="field.type === 'select'"
+          :field="field"
+          :modelValue="formData[field.name]"
+          :error="errors[field.name]"
           @update:modelValue="(value) => updateField(field.name, value)"
         />
       </template>
@@ -58,16 +85,20 @@
 <script lang="ts">
 import { defineComponent, computed, useSlots } from 'vue';
 import type { PropType } from 'vue';
-import FormField from './FormField.vue';
-import type { FormFieldConfig } from './FormField.vue';
 import { useStore } from '../store';
-
-export type FormGeneratorErrors = Record<string, string>;
+import TextField from './fields/TextField.vue';
+import TextareaField from './fields/TextareaField.vue';
+import CheckboxField from './fields/CheckboxField.vue';
+import SelectField from './fields/SelectField.vue';
+import type { FormFieldConfig, FormGeneratorErrors, FormGeneratorProps } from '../types/form';
 
 export default defineComponent({
   name: 'FormGenerator',
   components: {
-    FormField,
+    TextField,
+    TextareaField,
+    CheckboxField,
+    SelectField,
   },
   props: {
     // Конфигурация полей формы
@@ -252,6 +283,8 @@ export default defineComponent({
 }
 
 @keyframes spin {
-  to { transform: rotate(360deg); }
+  to {
+    transform: rotate(360deg);
+  }
 }
 </style> 
