@@ -2,7 +2,6 @@
 // используем следующий обходной путь с принудительным импортом
 // @ts-ignore
 import { createStore, Store, useStore as baseUseStore } from "vuex";
-import type { CommitOptions, DispatchOptions } from "vuex";
 import type { InjectionKey } from "vue";
 
 // Определение типа состояния хранилища
@@ -26,12 +25,12 @@ export type MyStore = Omit<Store<State>, 'commit' | 'dispatch'> & {
   commit<K extends keyof MyMutations, P extends Parameters<MyMutations[K]>[1]>(
     key: K,
     payload: P,
-    options?: CommitOptions
+    options?: { root?: boolean }
   ): ReturnType<MyMutations[K]>;
   dispatch<K extends keyof MyActions>(
     key: K,
     payload?: Parameters<MyActions[K]>[1],
-    options?: DispatchOptions
+    options?: { root?: boolean }
   ): ReturnType<MyActions[K]>;
 }
 
