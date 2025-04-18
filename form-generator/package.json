@@ -15,7 +15,6 @@
     "vuex": "^4.1.0"
   },
   "devDependencies": {
-    "@types/vuex": "^4.0.0",
     "@vitejs/plugin-vue": "^5.2.1",
     "@vue/tsconfig": "^0.7.0",
     "typescript": "~5.7.2",
